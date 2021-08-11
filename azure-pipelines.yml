@@ -57,7 +57,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Build.SourcesDirectory)/coverage/UI/cobertura-coverage.xml'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/UIcoverage/UI/cobertura-coverage.xml'
 
 - task: SonarCloudAnalyze@1 
 - task: SonarCloudPublish@1
