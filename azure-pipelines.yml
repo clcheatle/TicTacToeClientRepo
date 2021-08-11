@@ -44,9 +44,7 @@ steps:
     npm install
     ng build --prod
     ng test -- --watch=false --code-coverage   
-    ls /coverage
-    ls     
-    workingDir: './UI/'
+    
   displayName: 'npm install and build'
 
 - task: PublishCodeCoverageResults@1
