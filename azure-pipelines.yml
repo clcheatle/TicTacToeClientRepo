@@ -43,7 +43,7 @@ steps:
     npm install -g @angular/cli
     npm install
     ng build --prod
-    ng test -- --watch=false --code-coverage   
+    ng test --watch=false --karmaConfig karma.conf.ci.js --code-coverage  
     
   displayName: 'npm install and build'
 
