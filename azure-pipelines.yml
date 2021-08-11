@@ -56,7 +56,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: '$(System.DefaultWorkingDirectory)/UI'
-    customCommand: 'ng build --prod'
+    customCommand: 'run build -- $(ngBuildConfiguration)'
   displayName: 'npm build'
     
 - task: Npm@1
