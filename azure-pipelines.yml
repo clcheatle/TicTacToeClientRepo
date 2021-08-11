@@ -36,16 +36,23 @@ steps:
     cliProjectKey: 'clcheatle_clcheatle'
     cliProjectName: 'clcheatle'
     cliSources: '$(System.DefaultWorkingDirectory)/UI'
+    extraProperties: |
+      sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/UI/coverage/UI/lcov.info
 
 - script: |
     npm install -g @angular/cli
     npm install
     ng build --prod
-    npm run test-ci   
+    ng test -- --watch=false --code-coverage   
     ls /coverage
     ls     
     workingDir: './UI/'
   displayName: 'npm install and build'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: './UI/coverage/UI/lcov.info'
 
 - task: SonarCloudAnalyze@1 
 - task: SonarCloudPublish@1
