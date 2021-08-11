@@ -43,10 +43,8 @@ steps:
     npm install -g @angular/cli
     npm install
     ng build --prod
+    npx ng test --watch=false --codeCoverage=true
   displayName: 'npm install and build'
-
-- script: npx ng test --watch=false --codeCoverage=true
-  displayName: 'Tests'
 
 - task: PublishCodeCoverageResults@1
   inputs:
