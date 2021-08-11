@@ -44,14 +44,12 @@ steps:
     command: 'custom'
     workingDir: '$(System.DefaultWorkingDirectory)/UI'
     customCommand: 'npm install -g @angular/cli'
-    verbose: true
   displayName: 'install angular cli'
 
 - task: Npm@1
   inputs:
     command: 'install'
     workingDir: '$(System.DefaultWorkingDirectory)/UI'
-    verbose: true
   displayName: 'install dependencies'
 
 - task: Npm@1
@@ -59,7 +57,6 @@ steps:
     command: 'custom'
     workingDir: '$(System.DefaultWorkingDirectory)/UI'
     customCommand: 'ng build --prod'
-    verbose: true
   displayName: 'npm build'
     
 - task: Npm@1
