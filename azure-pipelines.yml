@@ -52,7 +52,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: './UI/coverage/UI/lcov.info'
+    summaryFileLocation: './UI/coverage/**/*.xml'
 
 - task: SonarCloudAnalyze@1 
 - task: SonarCloudPublish@1
