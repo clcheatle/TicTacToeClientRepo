@@ -1,0 +1,60 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+pool: Default
+
+variables:
+  buildConfiguration: 'Release'
+  ngBuildConfiguration: '--prod'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '11'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'LocalDirectory'
+    jdkFile: 'C:/Users/clche/Downloads/jdk-11.0.12_windows-x64_bin.zip'
+    jdkDestinationDirectory: '/builds/binaries/externals'
+    cleanDestinationDirectory: true
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'TicTacToeClientSonarCloudToken'
+    organization: 'clcheatle'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'clcheatle_clcheatle'
+    cliProjectName: 'clcheatle'
+    cliSources: '$(System.DefaultWorkingDirectory)/UI'
+    extraProperties: |
+      sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/UI/coverage/UI/lcov.info
+
+- script: |
+    npm install -g @angular/cli
+    npm install
+    ng build --prod
+    ng test -- --watch=false --code-coverage   
+    ls /coverage
+    ls     
+    workingDir: './UI/'
+  displayName: 'npm install and build'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: './UI/coverage/UI/lcov.info'
+
+- task: SonarCloudAnalyze@1 
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
