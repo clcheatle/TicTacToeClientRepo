@@ -29,7 +29,9 @@ module.exports = function (config) {
       subdir: '.',
       reporters: [
         { type: 'html' },
-        { type: 'text-summary' }
+        { type: 'text-summary' },
+        { type: 'lcovonly'},
+        { type: 'cobertura'}
       ],
       check: {
         global: {
@@ -38,17 +40,6 @@ module.exports = function (config) {
           functions: 20,
           lines: 20
         }
-      }
-    },
-    coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, './coverage/UI'),
-      reports: ['html', 'lcovonly', 'text-summary', 'cobertura'],
-      fixWebpackSourcePaths: true,
-      thresholds: {
-        statements: 20,
-        branches: 20,
-        functions: 20,
-        lines: 20
       }
     },
     reporters: ['progress', 'kjhtml'],
