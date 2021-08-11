@@ -1,0 +1,8 @@
+<div class="boardTiles">
+    <div class="square"
+        *ngFor= "let val of squares; let i = index"
+        (click) = "playerMove(i)">
+        <app-square [symbol] = "val"></app-square>
+    </div>
+    <button>Restart Game</button>
+</div>

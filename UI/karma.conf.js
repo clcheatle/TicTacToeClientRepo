@@ -30,7 +30,26 @@ module.exports = function (config) {
       reporters: [
         { type: 'html' },
         { type: 'text-summary' }
-      ]
+      ],
+      check: {
+        global: {
+          statements: 20,
+          branches: 20,
+          functions: 20,
+          lines: 20
+        }
+      }
+    },
+    coverageIstanbulReporter: {
+      dir: require('path').join(__dirname, './coverage/UI'),
+      reports: ['html', 'lcovonly', 'text-summary', 'cobertura'],
+      fixWebpackSourcePaths: true,
+      thresholds: {
+        statements: 20,
+        branches: 20,
+        functions: 20,
+        lines: 20
+      }
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
