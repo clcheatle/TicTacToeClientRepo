@@ -43,14 +43,15 @@ steps:
     npm install -g @angular/cli
     npm install
     ng build --prod
-    ng test --watch=false --karmaConfig karma.conf.ci.js --code-coverage  
-    
   displayName: 'npm install and build'
+
+- script: npx ng test --watch=false --codeCoverage=true
+  displayName: 'Tests'
 
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/UI/cobertura-coverage.xml'
+    summaryFileLocation: '$(Build.SourcesDirectory)/coverage/UI/cobertura-coverage.xml'
 
 - task: SonarCloudAnalyze@1 
 - task: SonarCloudPublish@1
