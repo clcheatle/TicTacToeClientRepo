@@ -39,12 +39,12 @@ steps:
     extraProperties: |
       sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/UI/coverage/UI/lcov.info
 
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    workingDir: '$(System.DefaultWorkingDirectory)/UI'
-    customCommand: 'npm install -g @angular/cli'
-  displayName: 'install angular cli'
+# - task: Npm@1
+#   inputs:
+#     command: 'custom'
+#     workingDir: '$(System.DefaultWorkingDirectory)/UI'
+#     customCommand: 'npm install -g @angular/cli'
+#   displayName: 'install angular cli'
 
 - task: Npm@1
   inputs:
