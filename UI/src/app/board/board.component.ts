@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Player } from '../Models/player';
 import { GamestateDto } from '../Models/gamestateDto';
 import { BoardService } from '../Services/board.service';
 import { Gamestate } from '../Models/gamestate';
+import { Move } from '../Models/move';
 
 @Component({
   selector: 'app-board',
@@ -10,6 +11,7 @@ import { Gamestate } from '../Models/gamestate';
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
+  @ViewChild ('frame') public modal: any;
   squares: any[];
   activePlayer: Player;
   winner: Player;
@@ -17,6 +19,9 @@ export class BoardComponent implements OnInit {
   player1: Player;
   player2: Player;
   gsdto: GamestateDto;
+  gameResults: string;
+  disableGame: string = 'visible';
+  resetState: boolean = true;
   
 
   constructor(private boardService: BoardService) { }
@@ -45,6 +50,8 @@ export class BoardComponent implements OnInit {
 
   createNewGame()
   {
+    this.disableGame = 'visible';
+    this.resetState = true;
     this.gsdto = {
       player1: this.player1,
       player2: this.player2
@@ -54,22 +61,77 @@ export class BoardComponent implements OnInit {
       this.gameState = gs;
       this.activePlayer = gs.activePlayer;
       this.squares = gs.board.boardMatrix;
-      console.log(this.gameState);
-      console.log(this.activePlayer);
-      console.log(this.squares);
     });
+
+    if(this.modal != undefined)
+    {
+      this.modal.hide();
+    }
+    
   }
 
-  //refactor
   playerMove(position: number)
   {
     console.log(position);
     
     if(this.squares[position] != "X" && this.squares[position] != "O")
     {
-      this.squares.splice(position, 1, this.activePlayer.symbol);
+      let m: Move = {
+        gameState: this.gameState,
+        movePosition: position
+      };
+
+      this.boardService.playerMove(m).subscribe(gs => {
+        console.log(gs.board.boardMatrix);
+        this.gameState = gs;
+        this.squares = gs.board.boardMatrix;
+        this.checkWinner();
+        this.computerMove();
+      });
     }
-    console.log(this.squares);
+  }
+
+  computerMove()
+  {
+    this.boardService.computerMove(this.gameState).subscribe(gs => {
+      console.log(gs.board.boardMatrix);
+      this.gameState = gs;
+      this.squares = gs.board.boardMatrix;
+
+      this.checkWinner();
+    });
+  }
+
+  resetGame()
+  {
+    this.boardService.resetGame(this.gameState).subscribe(gs => {
+      this.gameState = gs;
+      this.squares = this.gameState.board.boardMatrix;
+      this.disableGame = 'visible';
+    });
+  }
+
+  checkWinner()
+  {
+    if(this.gameState.gameOver)
+    {
+      this.disableGame = 'none';
+      this.resetState = false;
+      if(this.gameState.winner == null)
+      {
+        this.gameResults = "Draw! Would you like to play again?";
+      }
+      else if(this.gameState.winner.playerId == 1)
+      {
+        this.gameResults = "You won! Would you like to play again?";
+      }
+      else
+      {
+        this.gameResults = this.gameState.winner.name + " won! Would you like to play again?";
+      }
+  
+      this.modal.show();
+    }
   }
 
 }
