@@ -7,11 +7,11 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SquareComponent implements OnInit {
   @Input() symbol: string = "";
+  @Input() gameStart: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log("Child square " + this.symbol);
     if(this.symbol != "X" && this.symbol != "O")
     {
       this.symbol = "";

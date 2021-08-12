@@ -28,7 +28,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FontAwesomeModule,
     MDBBootstrapModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
