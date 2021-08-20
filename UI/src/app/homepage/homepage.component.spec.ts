@@ -1,4 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { BoardComponent } from '../board/board.component';
 
 import { HomepageComponent } from './homepage.component';
 
@@ -8,7 +11,9 @@ describe('HomepageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HomepageComponent ]
+      declarations: [ HomepageComponent, BoardComponent ],
+      imports: [HttpClientModule,
+                MDBBootstrapModule.forRoot()]
     })
     .compileComponents();
   });

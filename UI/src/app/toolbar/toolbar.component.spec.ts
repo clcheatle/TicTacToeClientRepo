@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { ToolbarComponent } from './toolbar.component';
 
@@ -8,7 +9,8 @@ describe('ToolbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToolbarComponent ]
+      declarations: [ ToolbarComponent ],
+      imports: [MDBBootstrapModule.forRoot()],
     })
     .compileComponents();
   });

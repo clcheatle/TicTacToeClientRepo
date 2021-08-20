@@ -71,9 +71,7 @@ export class BoardComponent implements OnInit {
   }
 
   playerMove(position: number)
-  {
-    console.log(position);
-    
+  {    
     if(this.squares[position] != "X" && this.squares[position] != "O")
     {
       let m: Move = {
@@ -82,7 +80,6 @@ export class BoardComponent implements OnInit {
       };
 
       this.boardService.playerMove(m).subscribe(gs => {
-        console.log(gs.board.boardMatrix);
         this.gameState = gs;
         this.squares = gs.board.boardMatrix;
         this.checkWinner();
@@ -94,7 +91,6 @@ export class BoardComponent implements OnInit {
   computerMove()
   {
     this.boardService.computerMove(this.gameState).subscribe(gs => {
-      console.log(gs.board.boardMatrix);
       this.gameState = gs;
       this.squares = gs.board.boardMatrix;
 
